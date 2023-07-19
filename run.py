@@ -30,7 +30,7 @@ new_cuttof = input("Enter the cutoff value for the peak finding algorithm (stand
 if new_cuttof != '':
     cutoff = float(new_cuttof)
 
-#lines = [6546.238, 6569.214]
+lines = [6546.238, 6569.214]
 new_lines = input("If you want to use different lines, give name of the txt file: ") + ".txt"
 if new_lines != '':
     lines = np.loadtxt(new_lines)
