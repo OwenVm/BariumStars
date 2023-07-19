@@ -23,14 +23,14 @@ np.savetxt(f'{name}.asc', data.T, delimiter='\t')
 
 v0 = 2*float(input("Enter the star's radial velocity in km/s from SIMBAD: "))
 
-cutoff = 100
-new_cuttof = input("Enter the cutoff value for the peak finding algorithm (standard 100): ")
+cutoff = 50
+new_cuttof = input("Enter the cutoff value for the peak finding algorithm (standard 50): ")
 if new_cuttof != '':
     cutoff = float(new_cuttof)
 
-lines = [6546.238, 6569.214]
+lines = np.loadtxt('lines.txt', delimiter=',')
 new_lines = input("If you want to use different lines, give name of the txt file: ") + ".txt"
-if new_lines != '':
+if new_lines != '.txt':
     lines = np.loadtxt(new_lines)
 
 a, b = radial_velocity(lines, flux, lam, v0, cutoff)

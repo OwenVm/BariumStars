@@ -44,9 +44,14 @@ def find_peak(flux, lam, lam0, v0, cutoff):
             peak.append(i)
             indexes.append(np.where(lam==i)[0][0])
     
+    '''for i in range(len(peak)-1):
+        if np.where(lam==peak[i])[0][0] - np.where(lam==peak[i+1])[0][0] != 1:
+            print("Multiple peaks found")
+            return'''
+
     if len(peak) == 0:
         print('No peak found, maybe increase v0 or decrease the cutoff.')
-        return
+        return None
     
     return lam[np.where(flux==min(flux[indexes]))[0]][0]
         
@@ -55,6 +60,8 @@ def find_rv_peak(flux, lam, lam0, v0, cutoff):
     returns the radial velocity of the star in km/s
     '''
     observed = find_peak(flux, lam, lam0, v0, cutoff)
+    if observed is None:
+        return None
     return radial_velocity_shift(observed, lam0)
 
 def radial_velocity(lines, flux, lam, v0, cutoff):
@@ -68,7 +75,9 @@ def radial_velocity(lines, flux, lam, v0, cutoff):
     '''
     rv = []
     for line in lines:
-        rv.append(find_rv_peak(flux, lam, line, v0, cutoff))
+        rv_new = find_rv_peak(flux, lam, line, v0, cutoff)
+        if rv_new is not None:
+            rv.append(rv_new)
     return rv, np.mean(rv)
 
 def rv_error(lines, flux, lam, v0, cutoff):
