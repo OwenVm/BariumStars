@@ -10,6 +10,9 @@ parser.add_argument("output", type=str, help="Name of output file")
 parser.add_argument('-d', '--detailed', action = 'store_true', help = "Shows Excitation if using Fe_allines.list")
 #parser.add_argument("pdf", type=str, help="Path to pdf file")
 
+#run as "python Selection.py <file with all Fe lines>.list Fe_selected_lines.txt" for not detailed
+#or as "python Selection.py AllFe.txt.list Fe_selected_lines.txt -d" for detailed
+
 args = parser.parse_args()
 
 file = args.input
