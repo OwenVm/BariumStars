@@ -3,15 +3,19 @@ import numpy as np
 import argparse
 import getch
 import os 
+import textwrap
 
-parser = argparse.ArgumentParser(description="Select lines from line file")
+parser = argparse.ArgumentParser(description="Select lines from line file",
+                                epilog=textwrap.dedent('''
+                                run as "python3 Selection.py <file with all Fe lines>.list Fe_selected_lines.txt" for not detailed
+                                or as "python3 Selection.py AllFe.txt.list Fe_selected_lines.txt -d" for detailed
+                                ''')
+                            )
 parser.add_argument("input", type=str, help="Name of line file")
 parser.add_argument("output", type=str, help="Name of output file")
 parser.add_argument('-d', '--detailed', action = 'store_true', help = "Shows Excitation if using Fe_allines.list")
 #parser.add_argument("pdf", type=str, help="Path to pdf file")
 
-#run as "python3 Selection.py <file with all Fe lines>.list Fe_selected_lines.txt" for not detailed
-#or as "python3 Selection.py AllFe.txt.list Fe_selected_lines.txt -d" for detailed
 
 args = parser.parse_args()
 
