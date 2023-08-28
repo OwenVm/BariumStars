@@ -37,6 +37,7 @@ if args.detailed:
     print(f"If you want to accept a line, type 'y', if you want to reject just press any other key. To quit press 'q'")
 
     for i in range(len(data)):
+        print('')
         print(f"Accept line at {float(data[i])}? (page {i+1}/{len(data)}) (Fe {Excitation[i]}) (y/n)")
 
         #os.system(f"evince -i {i+1} {pdf}")
