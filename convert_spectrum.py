@@ -4,8 +4,8 @@ import numpy as np
 from astropy.io import fits
 
 parser = argparse.ArgumentParser(description="Convert fits to ASCII file")
-parser.add_argument("input", type=str, help="parameter file")
-parser.add_argument("output", type=str, help="map voor .vtu files")
+parser.add_argument("input", type=str, help="Fits file")
+parser.add_argument("output", type=str, help="Name of ascii file")
 args = parser.parse_args()
 
 file = args.input
@@ -27,4 +27,4 @@ flux_good = flux[~mask]
 data = np.array([wavelength_good, flux_good])
 
 
-np.savetxt(out, data.T, delimiter="\t")
+np.savetxt(f'{out}.asc', data.T, delimiter="\t")
