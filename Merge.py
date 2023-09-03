@@ -7,7 +7,9 @@ from astropy.io import fits
 
 parser = argparse.ArgumentParser(description="Merges spectra and converts it to ASCII file",
                                 epilog=textwrap.dedent('''
-                                run as "python3 Merge.py <unseq> <amount of spectra> <name of output ascii file>
+                                it is assumed the radial velocity of all the spectra is the samen, and that the 
+                                spectra are taken consecutively, i.e. the unseq numbers are consecutive. 
+                                run as "python3 Merge.py <unseq> <amount of spectra> <name of output ascii file>"
                                 ''')
                             )
 parser.add_argument("input", type=str, help="Unseq of first fit file")
