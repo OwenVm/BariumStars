@@ -25,7 +25,7 @@ button.addEventListener("click", function() {
 
         const [wavelength, excitation] = data[i-1];
         if (checkbox.checked) {
-            selectedWavelengths.push(Math.round(wavelength*100)/100);
+            selectedWavelengths.push(Math.round(wavelength*1000)/1000);
         }
     }
     console.log(selectedWavelengths);
