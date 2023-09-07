@@ -2,12 +2,16 @@ import pandas as pd
 import numpy as np
 import argparse
 import os 
+import textwrap
 
-parser = argparse.ArgumentParser(description="Select lines from line file")
+parser = argparse.ArgumentParser(description="Select lines based on the equivalent widths.",
+                                epilog=textwrap.dedent(''' 
+                                run as "python3 reduced_eqw.py Fe_<star>.list Selected_Fe_lines_eqw_txt"
+                                ''')
+                            )
 parser.add_argument("input", type=str, help="Path to the .eqw file")
 parser.add_argument("output", type=str, help="Name of output file")
 
-#run as "python3 reduced_eqw.py Fe_<star>.list Selected_Fe_lines_eqw_txt"
 args = parser.parse_args()
 
 file = args.input
