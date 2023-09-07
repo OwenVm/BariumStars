@@ -1,0 +1,22 @@
+* {
+    font-family: sans-serif;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 80fr 20fr;
+
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+input[type='checkbox'] {
+    width:80%;
+    height:80%;
+    background:white;
+    border:10px solid #555;
+
+}
