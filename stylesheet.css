@@ -5,7 +5,7 @@
 .grid {
     display: grid;
     grid-template-columns: 80fr 20fr;
-
+    margin-top: 140px;
 }
 
 img {
@@ -13,10 +13,63 @@ img {
     height: auto;
 }
 
-input[type='checkbox'] {
-    width:80%;
-    height:80%;
-    background:white;
-    border:10px solid #555;
+input[type="checkbox"] {
+    width: 80%;
+    height: 80%;
+    background: white;
+    border: 10px solid #555;
+}
 
+.floating {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #ffffff;
+    border-radius: 10%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* width: 200%; */
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px 15px 20px;
+}
+
+.floating p {
+    font-size: 1.7em;
+    margin: 3px 0px 3px 0px;
+}
+
+/* CSS */
+button {
+    appearance: button;
+    backface-visibility: hidden;
+    background-color: #405cf5;
+    border-radius: 6px;
+    border-width: 0;
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+        rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
+        Ubuntu, sans-serif;
+    font-size: 100%;
+    height: 44px;
+    line-height: 1.15;
+    margin: 12px 0 0;
+    outline: none;
+    overflow: hidden;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transform: translateZ(0);
+    transition: all 0.2s, box-shadow 0.08s ease-in;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #6c82ff;
 }

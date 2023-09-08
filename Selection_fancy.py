@@ -1,8 +1,9 @@
+#!/usr/bin/env python
 import argparse
 import textwrap
 import webbrowser
 from pathlib import Path
-from shutil import copy
+from shutil import copy, rmtree
 from subprocess import run
 
 import numpy as np
@@ -18,7 +19,7 @@ def buildHTMLDiv(imagepath, index, name):
     """
 
 
-def buildHTML(folder, N, wavelengths, excitation):
+def buildHTML(folder, N, element, unique_excitations, wavelengths, excitations):
     html = """
     <!DOCTYPE html>
     <html>
@@ -26,11 +27,19 @@ def buildHTML(folder, N, wavelengths, excitation):
     <link rel="stylesheet" href="stylesheet.css">
     </head>
     <body>
+    <div class="floating">
+    """
+    for exc in unique_excitations:
+         html += f"""
+        <p id="{exc}">{element} {exc}: 0</p>
+        """
+    html += """
+    </div>
     <div class="grid">
     """
     for i in range(1, N + 1):
         html += buildHTMLDiv(
-            folder / f"target{i:03}.png", i, f"{wavelengths[i-1]} Fe {excitation[i-1]}"
+            folder / f"target{i:03}.png", i, f"{element} {excitations[i-1]}, {wavelengths[i-1]} Å"
         )
     html += """
     </div>
@@ -61,11 +70,14 @@ if __name__ == "__main__":
 
     file = Path(args.input)
     pdf = Path(args.pdf)
+    element = pdf.stem.split("-")[0]
     # file = Path("AllFe.txt")
     # pdf = Path("Fe-HD26_5000g2.50m1.0z-0.70_HD26.int_m-0.7_t2.00_c-4.pdf")
 
     folder = Path(pdf.stem)
-    folder.mkdir()
+    if folder.exists():
+        rmtree(folder)
+    folder.mkdir(exist_ok=True)
 
     (folder / "images").mkdir()
     run(["pdftohtml", "-c", pdf, folder / "images" / "target.html"])
@@ -74,13 +86,15 @@ if __name__ == "__main__":
 
     lines = np.loadtxt(file, dtype=str)
     data = lines[:, 0].astype(float)
-    Excitation = lines[:, -2].astype(str)
+    excitations = lines[:, -2].astype(str)
+    unique_excitations = np.unique(excitations)
     N = len(data)
 
     with open(folder / "data.js", "w") as f:
-        f.write("data = " + str(list([list(x) for x in zip(data, Excitation)])))
+        f.write("data = " + str(list([list(x) for x in zip(data, excitations)])))
+        f.write(f"\nelement = \"{element}\"")
 
-    html = buildHTML(Path("images"), N, data, Excitation)
+    html = buildHTML(Path("images"), N, element, unique_excitations, data, excitations)
     with open(folder / "index.html", "w") as f:
         f.write(html)
 
