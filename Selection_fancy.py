@@ -66,7 +66,7 @@ if __name__ == "__main__":
     # pdf = Path("Fe-HD26_5000g2.50m1.0z-0.70_HD26.int_m-0.7_t2.00_c-4.pdf")
 
     folder = Path(pdf.stem)
-    folder.mkdir()
+    folder.mkdir(exist_ok=True)
 
     (folder / "images").mkdir()
     run(["pdftohtml", "-c", pdf, folder / "images" / "target.html"])
