@@ -5,6 +5,7 @@
 .grid {
     display: grid;
     grid-template-columns: 80fr 20fr;
+    margin-top: 140px;
 
 }
 
@@ -19,4 +20,22 @@ input[type='checkbox'] {
     background:white;
     border:10px solid #555;
 
+}
+
+.floating {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #ffffff;
+    border-radius: 10%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* width: 200%; */
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px 15px 20px;
+}
+
+.floating p {
+    font-size: 1.7em;
+    margin: 3px 0px 3px 0px;
 }
