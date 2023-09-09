@@ -39,7 +39,7 @@ def buildHTML(folder, N, element, unique_excitations, wavelengths, excitations):
     """
     for i in range(1, N + 1):
         html += buildHTMLDiv(
-            folder / f"target{i:03}.png", i, f"{element} {excitations[i-1]}, {wavelengths[i-1]} Å"
+            folder / f"page-{i:03}.png", i, f"{element} {excitations[i-1]}, {wavelengths[i-1]} Å"
         )
     html += """
     </div>
@@ -79,9 +79,10 @@ if __name__ == "__main__":
         rmtree(folder)
     folder.mkdir(exist_ok=True)
 
+    
     (folder / "images").mkdir()
-    run(["pdftohtml", "-c", pdf, folder / "images" / "target.html"])
-
+    print("Loading pdf")
+    run(["pdftoppm", "-progress", "-png", pdf, folder / "images" / "page"])
 
 
     lines = np.loadtxt(file, dtype=str)
