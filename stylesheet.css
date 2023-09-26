@@ -4,7 +4,7 @@
 
 .grid {
     display: grid;
-    grid-template-columns: 80fr 20fr;
+    grid-template-columns: 55fr 45fr;
     margin-top: 140px;
 }
 
