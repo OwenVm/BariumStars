@@ -7,7 +7,7 @@ from astropy.io import fits
 
 parser = argparse.ArgumentParser(description="Merges spectra and converts it to ASCII file",
                                 epilog=textwrap.dedent(''' 
-                                run as "python3 Merge.py <unseq> <amount of spectra> <name of output ascii file>"
+                                run as "python3 Merge.py "unseq1, unseq2, ..." "rv1, rv2, ..." <name of output ascii file>"
                                 ''')
                             )
 parser.add_argument("input", type=str, help="List of unseqs of all spectra")
