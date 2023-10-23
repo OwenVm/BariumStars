@@ -46,7 +46,7 @@ def check_compatibility(data):
     pass
 
 def merge(out, files):
-    spectra = [convert_spectrum(f'00{id}_HRF_OBJ_ext_CosmicsRemoved_log_merged_cf.fits') for id in files]
+    spectra = [convert_spectrum(f'{id}_HRF_OBJ_ext_CosmicsRemoved_log_merged_cf.fits') for id in files]
 
     wavelengths = [spectrum[0] for spectrum in spectra]
     flux = [spectrum[1] for spectrum in spectra]

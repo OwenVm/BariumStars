@@ -41,7 +41,7 @@ def convert_spectrum(file):
     shifted_wavelengths = doppler_shift(wavelength_good, rv)
 
     flux_good = flux[~mask]
-    data = np.array([shifted_wavelength, flux_good])
+    data = np.array([shifted_wavelengths, flux_good])
 
     return data
 
@@ -54,7 +54,8 @@ def merge(out, files):
     wavelengths = [spectrum[0] for spectrum in spectra]
     flux = [spectrum[1] for spectrum in spectra]
 
-    #if check_compatibility(wavelengths):
+    if check_compatibility(wavelengths):
+        pass
 
     NewSpectra = np.sum(flux, axis=0)
 
@@ -70,4 +71,4 @@ if __name__ == "__main__":
     print(unseqs)
     print(rv)
 
-    merge(f'{out}.asc', files)
+    merge(f'{out}.asc', unseqs)
