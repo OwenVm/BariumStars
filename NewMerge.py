@@ -25,7 +25,7 @@ def doppler_shift(wavelengths, rv):
     c = 299792.458
     return wavelengths * np.sqrt((1 - rv/c)/(1 + rv/c))
 
-def convert_spectrum(file):
+def convert_spectrum(file, rv):
     hdul = fits.open(file)
 
     flux = hdul[0].data.T
@@ -46,29 +46,49 @@ def convert_spectrum(file):
     return data
 
 def check_compatibility(data):
-    pass
 
-def merge(out, files):
-    spectra = [convert_spectrum(f'0{id}_HRF_OBJ_ext_CosmicsRemoved_log_merged_cf.fits') for id in files]
+    first_elements = np.array([data[i][0] for i in range(len(data))])
+    max_first = np.argmax(first_elements)
+
+    last_elements = np.array([data[i][-1] for i in range(len(data))])
+    min_last = np.argmin(last_elements)
+
+    diffs_min = np.array([data[i] - data[max_first][0] for i in range(len(data))] ,dtype = object)
+    diffs_max = np.array([data[i] - data[min_last][-1] for i in range(len(data))] ,dtype = object)
+
+    indices_min = np.array([np.argmin(np.abs(diff)) for diff in diffs_min])
+    indices_max = np.array([np.argmin(np.abs(diff)) for diff in diffs_max])
+
+    return indices_min, indices_max
+
+def merge(out, files, rv):
+
+    spectra = [convert_spectrum(f'0{unseqs[i]}_HRF_OBJ_ext_CosmicsRemoved_log_merged_cf.fits', rv[i]) for i in range(len(files))]
 
     wavelengths = [spectrum[0] for spectrum in spectra]
     flux = [spectrum[1] for spectrum in spectra]
 
-    if check_compatibility(wavelengths):
-        pass
+    Left_indices, Right_indices = check_compatibility(wavelengths)
 
-    NewSpectra = np.sum(flux, axis=0)
+    print(Left_indices)
+    print(Right_indices)
 
-    data = np.array([wavelengths[0], NewSpectra])
-    return output(out, data)
+    lengths = Right_indices - Left_indices
+    min_length = np.min(lengths)
+
+    new_wavelength = np.array([wavelengths[i][Left_indices[i]:Left_indices[i] + min_length] for i in range(len(wavelengths))]) 
+    new_flux = np.array([flux[i][Left_indices[i]:Left_indices[i] + min_length] for i in range(len(flux))])
+
+    NewSpectra = np.sum(new_flux, axis = 0)
+    new_data = np.array([new_wavelength[0], NewSpectra], dtype = object)
+    return output(out, new_data)
     
 def output(out, data):
     np.savetxt(out, data.T, delimiter="\t")
-
 
 if __name__ == "__main__":
 
     print(unseqs)
     print(rv)
 
-    merge(f'{out}.asc', unseqs)
+    merge(f'{out}.asc', unseqs, rv)
