@@ -103,9 +103,11 @@ def load(id):
     logL = np.linspace(L0, L0+len(flux)*step, len(flux))
     lam = np.exp(logL)
 
-    mask = np.isnan(flux)
+    #remove nans
 
-    flux_removed, wavelength_removed = flux[~mask], lam[~mask]
+    flux_removed, indexes = remove_nans(flux)
+
+    wavelength_removed = lam[indexes]
     
     wavelength_good = lam[wavelength_removed]
     data = np.array([wavelength_good, flux_removed])

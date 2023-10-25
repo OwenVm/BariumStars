@@ -20,26 +20,6 @@ unseqs = np.array([int(i) for i in args.input.split(',')])
 rv = np.array([float(i) for i in args.input2.split(',')])
 out = args.output
 
-
-def load(id):
-    hdul = fits.open(f'0{id}_HRF_OBJ_ext_CosmicsRemoved_log_merged_cf.fits')
-
-    flux = hdul[0].data.T
-    L0 = hdul[0].header['CRVAL1']
-    step = hdul[0].header['CDELT1']
-
-    logL = np.linspace(L0, L0+len(flux)*step, len(flux))
-    lam = np.exp(logL)
-
-    mask = np.isnan(flux)
-
-    flux_removed, wavelength_removed = flux[~mask], lam[~mask]
-    wavelength_good = lam[wavelength_removed]
-    data = np.array([wavelength_good, flux_removed])
-
-    return data
-
-
 def doppler_shift(wavelengths, rv):
     c = 299792.458
     return wavelengths * np.sqrt((1 - rv/c)/(1 + rv/c))
